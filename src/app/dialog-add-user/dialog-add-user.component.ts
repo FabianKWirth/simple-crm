@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/models/user.class';
-import { Firestore } from '@angular/fire/firestore/';
-import { collection, doc, setDoc } from "firebase/firestore";
+import { Firestore, collectionData } from '@angular/fire/firestore/';
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -14,22 +15,22 @@ export class DialogAddUserComponent implements OnInit {
   user: User = new User();
   birthDate: Date;
 
-  //private database: Database = inject(Database);
+  loading: boolean = false;
 
   private firestore: Firestore = inject(Firestore);
-  //Es wird ein Exemplar von Firestore erzeugt und der Variable firestore zugewiesen
+  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {
 
-  constructor() {
   }
 
   ngOnInit() {
-
   }
 
   async saveUser() {
-    console.log(this.birthDate);
     this.user.birthDate = this.birthDate.getTime();
     const usersRef = collection(this.firestore, "users");
+    this.loading = true;
     await setDoc(doc(usersRef), this.user.toJSON());
+    this.loading = false;
+    this.dialogRef.close();
   }
 }
