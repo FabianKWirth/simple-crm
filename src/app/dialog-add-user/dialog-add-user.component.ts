@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/models/user.class';
-import { Observable } from 'rxjs';
-import { Database } from '@angular/fire/database';
 import { Firestore } from '@angular/fire/firestore/';
+import { collection, doc, setDoc } from "firebase/firestore";
+
+
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -12,22 +13,23 @@ import { Firestore } from '@angular/fire/firestore/';
 export class DialogAddUserComponent implements OnInit {
   user: User = new User();
   birthDate: Date;
-  users$: Observable<any[]>;
-  private database: Database = inject(Database);
+
+  //private database: Database = inject(Database);
 
   private firestore: Firestore = inject(Firestore);
+  //Es wird ein Exemplar von Firestore erzeugt und der Variable firestore zugewiesen
 
   constructor() {
   }
 
   ngOnInit() {
-    console.log(this.database);
-    console.log(this.firestore);
 
   }
 
-  saveUser() {
+  async saveUser() {
     console.log(this.birthDate);
     this.user.birthDate = this.birthDate.getTime();
+    const usersRef = collection(this.firestore, "users");
+    await setDoc(doc(usersRef), this.user.toJSON());
   }
 }

@@ -1,6 +1,6 @@
 
 export const environment = {
-  production: false,
+  production: true,
   useEmulators: true,
   firebase: {
     projectId: 'simple-crm-142cd',
