@@ -1,0 +1,55 @@
+.math-drawer-container {
+    height: 100vh;
+
+
+    .sidenav {
+
+        min-width: 300px;
+
+        .logo-container {
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px 0 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            li {
+                padding-left: 16px;
+                padding-right: 16px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+
+                &:hover{
+                    color: rgb(255, 91, 91);
+                }
+                
+                &:focus{
+                    outline: none;
+                }
+            }
+        }
+    }
+
+
+    .sidenav-content {
+        mat-toolbar {
+            min-height: 56px;
+        }
+
+
+        .router-container{
+            padding: 8px;
+        }
+
+        .burger-icon {
+            cursor: pointer;
+        }
+    }
+}
