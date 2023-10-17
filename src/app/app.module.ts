@@ -21,10 +21,18 @@ import { FormsModule } from '@angular/forms';
 import { ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
+import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
+import { DealsComponent } from './deals/deals.component';
+import { DialogAddDealComponent } from './dialog-add-deal/dialog-add-deal.component';
+
 
 
 @NgModule({
@@ -32,7 +40,12 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     AppComponent,
     DashboardComponent,
     UserComponent,
-    DialogAddUserComponent
+    DialogAddUserComponent,
+    UserDetailComponent,
+    DialogEditAddressComponent,
+    DialogEditUserComponent,
+    DealsComponent,
+    DialogAddDealComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +64,9 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
     FormsModule,
     MatCardModule,
     MatProgressBarModule,
+    MatMenuModule,
+    MatTableModule,
+    MatSelectModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],

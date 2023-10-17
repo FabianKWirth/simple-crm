@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { User } from 'src/models/user.class';
-import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Firestore } from '@angular/fire/firestore/';
+import { addDoc, collection } from "firebase/firestore";
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -14,6 +14,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class DialogAddUserComponent implements OnInit {
   user: User = new User();
   birthDate: Date;
+
 
   loading: boolean = false;
 
@@ -29,8 +30,14 @@ export class DialogAddUserComponent implements OnInit {
     this.user.birthDate = this.birthDate.getTime();
     const usersRef = collection(this.firestore, "users");
     this.loading = true;
-    await setDoc(doc(usersRef), this.user.toJSON());
-    this.loading = false;
+    addDoc(usersRef, this.user.toJSON()).then(() => {
+      console.log("Data saved Successfully");
+      this.loading = false;
+      this.closeDialog();
+    })
+  }
+
+  closeDialog() {
     this.dialogRef.close();
   }
 }

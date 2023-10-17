@@ -1,0 +1,34 @@
+.user-details {
+
+    gap: 32px;
+    mat-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 32px;
+        padding: 24px;
+        background-color: rgb(255, 91, 91);
+       
+
+
+        mat-card-title {
+            font-size: 64px;
+        }
+
+        img {
+            height: 64px;
+            width: 64px;
+        }
+    }
+
+    mat-card-content{
+        background-color: rgb(54, 54, 54);
+        padding: 16px;
+    }
+}
+
+
+.pin-right {
+    position: absolute;
+    right: 16px;
+}

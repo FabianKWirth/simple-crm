@@ -1,0 +1,24 @@
+
+<form>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<h1 mat-dialog-title>Add-Deal</h1>
+    <mat-form-field>
+        <mat-label>Select Type</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let status of dealStatusTypes" [value]="status">{{ status }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Value</mat-label>
+        <input [disabled]="loading" matInput type="number" step="0.01">
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="closeDialog()">No Thanks</button>
+        <button mat-button (click)="saveDeal()" cdkFocusInitial>Ok</button>
+    </div>
+</form>

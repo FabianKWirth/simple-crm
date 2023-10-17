@@ -5,20 +5,12 @@
             <th>E-Mail</th>
             <th>City</th>
         </thead>
-
-        <tr>
-            <th>asd</th>
-            <th>E-asdasd</th>
-            <th>Ciasdasdty</th>
+        <tr *ngFor="let user of userData$ |  async" [routerLink]="['/user/' + user.id ]">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.city }}</td>
+            <td>{{ user.id }}</td>
         </tr>
-
-        <tr>
-            <th>Name</th>
-            <th>E-Mail</th>
-            <th>City</th>
-        </tr>
-
-
     </table>
 </mat-card>
 

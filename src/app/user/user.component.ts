@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from 'src/models/user.class';
-import { AngularFireModule } from '@angular/fire/compat';
 import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection, doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { collection } from "firebase/firestore";
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 
 
 
@@ -16,39 +16,16 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class UserComponent implements OnInit {
 
   user: User = new User();
-
-  items$;
-  items;
-
-  //private database: Database = inject(Database);
+  userData$: Observable<any>;
 
   private firestore: Firestore = inject(Firestore);
-  unsublist: any;
   //Es wird ein Exemplar von Firestore erzeugt und der Variable firestore zugewiesen
 
+  userList = [];
 
   constructor(public dialog: MatDialog) {
 
-    this.unsublist = onSnapshot(this.getUsersRef(), (list) => {
-      list.forEach(element => {
-        console.log(element.data());
-      });
-    })
-
-
-
-
-    this.items$ = collectionData(this.getUsersRef());
-    this.items = this.items$.subscribe((list: any[]) => {
-      list.forEach(element => {
-        console.log(element);
-      });
-    });
-    this.ngOnDestroy();
-  }
-
-  ngOnDestroy() {
-    this.items.unsubscribe();
+    this.getUsers();
   }
 
   getUsersRef() {
@@ -61,4 +38,15 @@ export class UserComponent implements OnInit {
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
   }
+
+
+  getUsers() {
+    const usersRef = this.getUsersRef();
+    this.userData$ = collectionData(usersRef, { idField: "id" });
+  }
+
 }
+
+
+
+
