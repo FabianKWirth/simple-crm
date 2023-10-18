@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { FirebaseService } from 'src/services/firebase.service';
 import { doc, updateDoc } from 'firebase/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/models/user.class';
@@ -24,7 +24,7 @@ export class DialogEditUserComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditUserComponent>,
-    private firestore: Firestore
+    private firebaseService: FirebaseService
   ) {}
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
@@ -38,17 +38,12 @@ export class DialogEditUserComponent implements OnInit {
   updateUser() {
     this.user.birthDate = this.birthDate.getTime();
     console.log(this.birthDate.getTime());
-    const docInstance = doc(this.firestore, 'users', this.user.id);
-    const updateData = this.user.toJSON();
 
     this.loading = true;
-    updateDoc(docInstance, updateData)
-      .then(() => {
-        this.closeDialog();
-        this.loading = false;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.firebaseService.updateUserDoc(this.user.id,this.user.toJSON())
+    .then(() => {
+      this.closeDialog();
+      this.loading = false;
+    })
   }
 }

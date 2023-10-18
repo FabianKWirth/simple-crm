@@ -1,12 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
-import { User } from 'src/models/user.class';
-import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection } from "firebase/firestore";
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-
-
+import { User } from 'src/models/user.class';
+import { FirebaseService } from 'src/services/firebase.service';
+import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 
 @Component({
   selector: 'app-user',
@@ -14,19 +11,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
   user: User = new User();
-  userData$: Observable<any>;
-  //Es wird ein Exemplar von Firestore erzeugt und der Variable firestore zugewiesen
+  userData$: Observable<User[]>;
+  userList: User[] = [];
 
-  userList = [];
-
-  constructor(public dialog: MatDialog, private firestore: Firestore) {
-
+  constructor(public dialog: MatDialog, private firebaseService: FirebaseService) {
     this.getUsers();
   }
-
- 
 
   ngOnInit(): void {
   }
@@ -35,19 +26,7 @@ export class UserComponent implements OnInit {
     this.dialog.open(DialogAddUserComponent);
   }
 
-  getUsersRef() {
-    return collection(this.firestore, 'users');
-  }
-
   getUsers() {
-    const usersRef = this.getUsersRef();
-    this.userData$ = collectionData(usersRef, { idField: "id" });
+    this.userData$ = this.firebaseService.getUsers();
   }
-
-
-
 }
-
-
-
-
