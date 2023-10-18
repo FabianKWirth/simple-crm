@@ -1,0 +1,24 @@
+.deals-table {
+    width: 100%;
+
+    thead {
+        background-color: #c2185b;
+        padding: 8px !important;
+        font-size: 20px;
+    }
+
+    tr {
+        border-bottom: 1px solid black;
+        cursor: pointer;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &:hover {
+            background-color: #c2185c40;
+        }
+    }
+
+
+}

@@ -28,10 +28,11 @@ export class DialogEditAddressComponent {
     const docInstance = doc(this.firestore, "users", id);
     const updateData = this.user.toJSON();
 
+    this.loading = true;
     updateDoc(docInstance, updateData).
       then(() => {
-        console.log('Data Updated')
         this.closeDialog();
+        this.loading = false;
       })
       .catch((err) => {
         console.log(err);

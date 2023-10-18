@@ -17,20 +17,16 @@ export class UserComponent implements OnInit {
 
   user: User = new User();
   userData$: Observable<any>;
-
-  private firestore: Firestore = inject(Firestore);
   //Es wird ein Exemplar von Firestore erzeugt und der Variable firestore zugewiesen
 
   userList = [];
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private firestore: Firestore) {
 
     this.getUsers();
   }
 
-  getUsersRef() {
-    return collection(this.firestore, 'users');
-  }
+ 
 
   ngOnInit(): void {
   }
@@ -39,11 +35,16 @@ export class UserComponent implements OnInit {
     this.dialog.open(DialogAddUserComponent);
   }
 
+  getUsersRef() {
+    return collection(this.firestore, 'users');
+  }
 
   getUsers() {
     const usersRef = this.getUsersRef();
     this.userData$ = collectionData(usersRef, { idField: "id" });
   }
+
+
 
 }
 
