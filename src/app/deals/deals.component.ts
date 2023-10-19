@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core'
-import { MatTableModule } from '@angular/material/table';
-import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection } from "firebase/firestore";
-import { Observable } from 'rxjs';
+import { FirebaseService } from 'src/services/firebase.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Deal } from 'src/models/deal.class';
 
 @Component({
   selector: 'app-deals',
@@ -10,23 +9,30 @@ import { Observable } from 'rxjs';
   styleUrls: ['./deals.component.scss']
 })
 export class DealsComponent {
-  @Input() userId: String;
-  dealsData$: Observable<any>;
+  @Input() userId: String = "";
+  currentDeals: Deal[];
 
-  constructor(private firestore: Firestore) {
-    this.getDeals();
-  }
+  private aChangeSubject = new Subject<number>();
+  private destroy$ = new Subject<void>();
 
-  getDealsRef() {
-    return collection(this.firestore, 'deals');
-  }
-
-  getDeals() {
-    const dealsRef= this.getDealsRef();
-    this.dealsData$ = collectionData(dealsRef, { idField: "id" });
+  constructor(private firebaseService: FirebaseService) {
+    this.loadDeals();
   }
 
 
+  async loadDeals() {
+    if (this.userId != "") {
+      await this.firebaseService.loadDealsOfUser(this.userId);
+    } else {
+      await this.firebaseService.loadDealsOfUser(this.userId);
+    }
 
-  
+    this.aChangeSubject.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.currentDeals=this.firebaseService.dealsList;
+      console.log(this.currentDeals);
+    });
+  }
+
 }
