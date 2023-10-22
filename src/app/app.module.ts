@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +31,12 @@ import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-ad
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { DealsComponent } from './deals/deals.component';
 import { DialogAddDealComponent } from './dialog-add-deal/dialog-add-deal.component';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DialogEditDealComponent } from './dialog-edit-deal/dialog-edit-deal.component';
+import { NewsFeedComponent } from './news-feed/news-feed.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 
 
 
@@ -45,7 +50,9 @@ import { DialogAddDealComponent } from './dialog-add-deal/dialog-add-deal.compon
     DialogEditAddressComponent,
     DialogEditUserComponent,
     DealsComponent,
-    DialogAddDealComponent
+    DialogAddDealComponent,
+    DialogEditDealComponent,
+    NewsFeedComponent
   ],
   imports: [
     BrowserModule,
@@ -67,11 +74,13 @@ import { DialogAddDealComponent } from './dialog-add-deal/dialog-add-deal.compon
     MatMenuModule,
     MatTableModule,
     MatSelectModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
   providers: [
-    ScreenTrackingService, UserTrackingService
+    ScreenTrackingService, UserTrackingService, DatePipe,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,16 +1,15 @@
 <div class="default-form">
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    <h1 mat-dialog-title>Add-Deal</h1>
+    <h1 mat-dialog-title>Edit-Deal</h1>
     <mat-form-field>
         <mat-label>Select Status</mat-label>
-        <mat-select [(ngModel)]="deal.status">
-            <mat-option *ngFor="let status of dealStatusTypes" [value]="status">{{ status
-                }}</mat-option>
+        <mat-select [(ngModel)]="deal.status" default="deal.status">
+            <mat-option *ngFor="let status of dealStatusTypes" [value]="status">{{ status }}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="deal.description"></textarea>
+        <textarea matInput [(ngModel)]="deal.description">{{ deal.description }}</textarea>
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Value</mat-label>

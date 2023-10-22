@@ -1,5 +1,5 @@
-<mat-card class="user-details">
-    <mat-card-header>
+<mat-card class="user-details" *ngIf="firebaseService.loadedUser">
+    <mat-card-header >
         <button mat-icon-button [matMenuTriggerFor]="userMenu" class="pin-right">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -13,8 +13,8 @@
                 <span>Delete</span>
             </button>
         </mat-menu>
-        <img mat-card-avatar src="assets/avatars/avatar1.png">
-        <mat-card-title>{{ user.firstName }} {{ user.lastName }}</mat-card-title>
+        <img mat-card-avatar src="assets/avatars/avatar2.png">
+        <mat-card-title>{{ firebaseService.loadedUser.firstName }} {{ firebaseService.loadedUser.lastName }}</mat-card-title>
         
     </mat-card-header>
 
@@ -27,19 +27,14 @@
                 <mat-icon>edit</mat-icon>
                 <span>Edit</span>
             </button>
-            <button mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-            </button>
         </mat-menu>
 
         <h2>Address:</h2>
-        <p>{{ user.street }}</p>
-        <p>{{ user.zipCode }} {{ user.city }}</p>
-
+        <p>{{ firebaseService.loadedUser.street }}</p>
+        <p>{{ firebaseService.loadedUser.zipCode }} {{ firebaseService.loadedUser.city }}</p>
     </mat-card-content>
 
-    <app-deals [userId]="userId"></app-deals>
-
+    <app-deals *ngIf="firebaseService.loadedDeals" [deals]="firebaseService.loadedDeals"> 
+    </app-deals>
     <button mat-button (click)="addDeal()">Add Deal</button>
 </mat-card>

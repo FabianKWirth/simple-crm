@@ -6,3 +6,39 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width{
     width: 100%;
 }
+
+.default-table{
+    width: 100%;
+    thead{
+        background-color: #8d0000;
+    }
+
+    tr {
+        border-bottom: 1px solid black;
+        cursor: pointer;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &:hover {
+            background-color: #8d000069;
+        }
+    }
+}
+
+.default-form{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 16px;
+
+    mat-form-field{
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+}
+
+.default-card{
+    padding:16px;
+}

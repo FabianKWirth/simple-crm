@@ -53,3 +53,21 @@
         }
     }
 }
+
+.default-form{
+    width: clamp(300px, 100%, 90000px);
+    .default-dialog{
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+
+        mat-select {
+            color: white;
+
+            mat-option {
+                color: white;
+            }
+        }
+
+    }
+}

@@ -1,38 +1,45 @@
-import { Component, Input } from '@angular/core'
-import { FirebaseService } from 'src/services/firebase.service';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
 import { Deal } from 'src/models/deal.class';
+import {MatCardModule} from '@angular/material/card';
+import { DialogEditDealComponent } from '../dialog-edit-deal/dialog-edit-deal.component';
+import { User } from 'src/models/user.class';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-deals',
   templateUrl: './deals.component.html',
   styleUrls: ['./deals.component.scss']
 })
-export class DealsComponent {
-  @Input() userId: String = "";
-  currentDeals: Deal[];
+export class DealsComponent implements OnInit {
+  @Input() deals: Deal[];
+  totalVolume: number=0; 
 
-  private aChangeSubject = new Subject<number>();
-  private destroy$ = new Subject<void>();
+  constructor(public dialog: MatDialog) {
 
-  constructor(private firebaseService: FirebaseService) {
-    this.loadDeals();
   }
 
+  ngOnInit(): void {
+    this.setTotalDealSum();
+  }
 
-  async loadDeals() {
-    if (this.userId != "") {
-      await this.firebaseService.loadDealsOfUser(this.userId);
-    } else {
-      await this.firebaseService.loadDealsOfUser(this.userId);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["deals"]) {
+      this.setTotalDealSum();
     }
+  }
 
-    this.aChangeSubject.pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(() => {
-      this.currentDeals=this.firebaseService.dealsList;
-      console.log(this.currentDeals);
+  setTotalDealSum(){
+    this.totalVolume=0;
+    this.deals.forEach((deal)=>{
+      this.totalVolume+=deal.volume;
     });
   }
+
+  editDeal(deal: Deal){
+    const dialog = this.dialog.open(DialogEditDealComponent);
+    dialog.componentInstance.deal = new Deal(deal.toJSON());
+    
+  }
+  
 
 }

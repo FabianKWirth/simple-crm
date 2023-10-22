@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
 import { FirebaseService } from 'src/services/firebase.service';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
@@ -12,21 +11,17 @@ import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.compo
 })
 export class UserComponent implements OnInit {
   user: User = new User();
-  userData$: Observable<User[]>;
   userList: User[] = [];
 
-  constructor(public dialog: MatDialog, private firebaseService: FirebaseService) {
-    this.getUsers();
+  constructor(public dialog: MatDialog, public firebaseService: FirebaseService) {
+    
   }
 
   ngOnInit(): void {
+    this.firebaseService.loadUsers();
   }
 
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
-  }
-
-  getUsers() {
-    this.userData$ = this.firebaseService.getUsers();
   }
 }

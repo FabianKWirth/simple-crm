@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection, doc, onSnapshot, updateDoc, query, where, getDocs } from "firebase/firestore";
-import { Observable } from 'rxjs';
+import { collection, doc, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { Deal } from 'src/models/deal.class';
 import { User } from 'src/models/user.class';
 
@@ -10,51 +9,105 @@ import { User } from 'src/models/user.class';
 })
 export class FirebaseService {
 
-  dealsData$: Observable<Deal[]>
-  unsubDeals;
-  public dealsList: any[] = [];
+  
+  unsubUserData: any;
+  loadedDeals: Deal[];
+  unsubDeals: any;
+  
+  unsubUsers: any;
+  loadedUsers: User[];
+  loadedUser: User;
 
-  ngOnDestroy() {
-    this.unsubDeals();
-  }
 
   constructor(private firestore: Firestore) { }
 
-  private getUsersRef() {
-    return collection(this.firestore, 'users');
-  }
-
-  getUsers(): any {
-    const usersRef = this.getUsersRef();
-    return collectionData(usersRef);
+  async loadUser(userId) {
+    const userRef = doc(this.firestore, "users", userId);
+    this.unsubUserData = onSnapshot(userRef, (doc) => {
+      this.loadedUser = new User(doc.data());
+      this.loadedUser.id = userId;
+    });
   }
 
   async updateUserDoc(userId, updateData) {
-    const docInstance = doc(this.firestore, 'users', userId);
-    updateDoc(docInstance, updateData);
+  const docInstance = doc(this.firestore, 'users', userId);
+  updateDoc(docInstance, updateData);
+}
+
+  async updateDeal(deal: Deal) {
+  if (deal.id == "") {
+    const docInstance = doc(collection(this.firestore, "deals"));
+    setDoc(docInstance, deal.toJSON());
+    console.log("deal created");
+  } else {
+    const docInstance = doc(this.firestore, 'deals', deal.id);
+    updateDoc(docInstance, deal.toJSON());
+    console.log("deal updated");
   }
+}
 
-
-
-  getDealsRef(userId?: String) {
-    if(!userId){
-      return query(collection(this.firestore, 'deals'));
-    }else{
-      return query(collection(this.firestore, 'deals'), where("userId","==",userId));
-    }
+getQuery(indexName ?: any, indexValue: String = "") {
+  if (indexName) {
+    return query(collection(this.firestore, "deals"), where(indexName, "==", indexValue));
+  } else {
+    return query(collection(this.firestore, "deals"));
   }
+}
 
-  async loadDealsOfUser(userId?: String) {
-    const dealsRef = this.getDealsRef(userId);
+  /**
+  * Asynchronously loads deals data from Firestore based on optional index parameters.
+  *
+  * @param {any} indexName - (Optional) The name of the index to filter Deals.
+  * @param {String} indexValue - (Optional) The value to filter Deals by within the specified index.
+  */
+  async loadDeals(indexName ?: any, indexValue: String = "") {
+  const q = this.getQuery(indexName, indexValue);
+  this.unsubDeals = onSnapshot(q, (querySnapshot) => {
+    this.loadedDeals = [];
+    querySnapshot.forEach((doc) => {
+      let docData = doc.data();
+      const deal = new Deal(docData);
+      deal.id = doc.id;
+      this.loadedDeals.push(deal);
+    })
+  });
+};
 
 
-    this.unsubDeals = onSnapshot(dealsRef, (list) => {
-      this.dealsList = [];
-      list.forEach(e => {
-        this.dealsList.push(e.data());
-      })
-    });
 
-    return this.dealsList;
+
+getQueryUsers(indexName ?: any, indexValue: String = "") {
+  if (indexName) {
+    return query(collection(this.firestore, "users"), where(indexName, "==", indexValue));
+  } else {
+    return query(collection(this.firestore, "users"));
   }
+}
+
+
+  /**
+* Asynchronously loads deals data from Firestore based on optional index parameters.
+*s
+* @param {any} indexName - (Optional) The name of the index to filter Deals.
+* @param {String} indexValue - (Optional) The value to filter Deals by within the specified index.
+*/
+async loadUsers(indexName?: any, indexValue: String = "") {
+  const q = this.getQueryUsers(indexName, indexValue);
+  this.unsubUsers = onSnapshot(q, (querySnapshot) => {
+    this.loadedUsers = [];
+    querySnapshot.forEach((doc) => {
+      let docData = doc.data();
+      const user = new User(docData);
+      user.id = doc.id;
+      this.loadedUsers.push(user);
+    })
+  });
+};
+
+
+ngOnDestroy() {
+  this.unsubUsers();
+  this.unsubDeals();
+  this.unsubUserData();
+}
 }

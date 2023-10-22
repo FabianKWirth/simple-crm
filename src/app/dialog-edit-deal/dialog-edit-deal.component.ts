@@ -1,23 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { Deal } from 'src/models/deal.class';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Deal } from 'src/models/deal.class';
 import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
-  selector: 'app-dialog-add-deal',
-  templateUrl: './dialog-add-deal.component.html',
-  styleUrls: ['./dialog-add-deal.component.scss']
+  selector: 'app-dialog-edit-deal',
+  templateUrl: './dialog-edit-deal.component.html',
+  styleUrls: ['./dialog-edit-deal.component.scss']
 })
-export class DialogAddDealComponent {
-
+export class DialogEditDealComponent {
   deal: Deal;
-  @Input() userId: string;
-
+  
   dealStatusTypes: string[] = ['Lead', 'Contacted', 'Demo Scheduled', 'Negotiation', 'Closed-Won', 'Closed-Lost', 'Upsell', 'Renewal', 'On-Hold', 'Referral'];
-  loading = false;
+  loading: boolean = false;
   dialog: any;
-
-  constructor(public dialogRef: MatDialogRef<DialogAddDealComponent>, public firebaseService: FirebaseService) {
+  
+  constructor(public dialogRef: MatDialogRef<DialogEditDealComponent>, public firebaseService: FirebaseService) {
     this.deal = new Deal();
   }
 
@@ -26,11 +24,9 @@ export class DialogAddDealComponent {
   }
 
   async saveDeal() {
-    this.deal.userId=this.userId;
     this.loading = true;
     console.log(this.deal);
 
-    this.firebaseService.loadedDeals.push(this.deal);
     this.firebaseService.updateDeal(this.deal)
       .then(() => {
         this.loading = false;
@@ -39,3 +35,4 @@ export class DialogAddDealComponent {
   }
 
 }
+

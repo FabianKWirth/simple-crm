@@ -1,0 +1,18 @@
+mat-card {
+    width: clamp(300px, 80%, 700px);
+
+    mat-card-title{
+        color: white;
+    }
+
+    mat-card-content{
+        color: white;
+        text-decoration: none;
+    }
+
+    @media screen and (max-width: 600px) {
+        img{
+            display: none;
+        }
+    }
+}
