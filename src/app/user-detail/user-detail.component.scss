@@ -1,5 +1,7 @@
 .user-details {
 
+    width: clamp(50px, 100%, 1000px);
+
     gap: 32px;
     mat-card-header {
         display: flex;

@@ -1,17 +1,16 @@
 <div *ngFor="let article of articles">
-    <a [href]="article.url" target="_blank">
-        <mat-card class="news-card">
-            <mat-card-header>
-                <img mat-card-avatar [src]="article.urlToImage" class="example-header-image">
-                <mat-card-title>{{ article.title }}</mat-card-title>
-                <mat-card-subtitle>{{ formatDate(article.publishedAt) }}</mat-card-subtitle>
+    <mat-card class="news-card" (click)="openNewsPage(article.url)">
+        <mat-card-header>
+            <img mat-card-avatar [src]="article.urlToImage" class="example-header-image">
+            <mat-card-title>{{ article.title }}</mat-card-title>
+            <mat-card-subtitle>{{ formatDate(article.publishedAt) }}</mat-card-subtitle>
 
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    {{ article.content }}
-                </p>
-            </mat-card-content>
-        </mat-card>
-    </a>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                {{ article.content }}
+            </p>
+        </mat-card-content>
+    </mat-card>
+
 </div>

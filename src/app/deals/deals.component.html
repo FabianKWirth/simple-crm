@@ -1,11 +1,8 @@
 <div class="default-card">
-  <mat-card>
+  <mat-card *ngIf="deals.length > 0;else noDealsBlock">
+
     <mat-card-title>Current active deals</mat-card-title>
-    <mat-card-content>Total Sale Volume: {{ totalVolume }}</mat-card-content>
-  </mat-card>
-
-
-  <div *ngIf="deals.length > 0;else noDealsBlock">
+    <mat-card-subtitle>Total Sale Volume: {{ totalVolume }}</mat-card-subtitle>
     <table class="default-table">
       <thead>
         <th>status</th>
@@ -20,7 +17,6 @@
         <td>{{ deal.description }}</td>
       </tr>
     </table>
-  </div>
-
+  </mat-card>
   <ng-template #noDealsBlock>Currently, there are no active deals.</ng-template>
 </div>

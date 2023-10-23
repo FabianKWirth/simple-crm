@@ -1,8 +1,12 @@
 mat-card {
-    width: clamp(300px, 80%, 700px);
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid rgb(255, 255, 255);
+    
 
     mat-card-title{
         color: white;
+        text-decoration: dotted;
     }
 
     mat-card-content{
@@ -15,4 +19,6 @@ mat-card {
             display: none;
         }
     }
+
+    margin-bottom: 8px;
 }

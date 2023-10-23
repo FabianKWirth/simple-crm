@@ -23,18 +23,24 @@ export class NewsFeedComponent implements OnInit {
   getNews() {
     const params = {
       apiKey: this.NEWS_API_KEY,
-      sources: 'bbc-news,the-verge',
+      category: "business",
       language: 'en'
     };
 
     this.http.get(this.apiUrl, { params }).subscribe(response => {
-      console.log(response["articles"]);
       this.articles=response["articles"];
       
     });
   }
+
+  openNewsPage(link){
+    window.open(link, '_blank');
+  }
+
   formatDate(date: string): string {
     const dateObject = new Date(date);
     return this.datePipe.transform(dateObject, 'd.M.y H:mm');
   }
+
+
 }

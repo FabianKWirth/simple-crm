@@ -36,6 +36,9 @@ import { DialogEditDealComponent } from './dialog-edit-deal/dialog-edit-deal.com
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { UserCountComponent } from './user-count/user-count.component';
+import { BiggestDealsComponent } from './biggest-deals/biggest-deals.component';
+import { TotalDealsVolumeComponent } from './total-deals-volume/total-deals-volume.component';
 
 
 
@@ -52,7 +55,10 @@ import { DatePipe } from '@angular/common';
     DealsComponent,
     DialogAddDealComponent,
     DialogEditDealComponent,
-    NewsFeedComponent
+    NewsFeedComponent,
+    UserCountComponent,
+    BiggestDealsComponent,
+    TotalDealsVolumeComponent
   ],
   imports: [
     BrowserModule,
@@ -85,4 +91,5 @@ import { DatePipe } from '@angular/common';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  
 }

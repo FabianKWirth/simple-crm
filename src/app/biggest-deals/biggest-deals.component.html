@@ -1,0 +1,16 @@
+<mat-card>
+
+    <mat-card-title>Deals of highest Volume</mat-card-title>
+
+    <table class="default-table">
+        <thead>
+            <th>value</th>
+            <th>status</th>
+            <th>user</th>
+        </thead>
+        <tr *ngFor="let biggestDeal of firebaseService.loadedBiggestDeals">
+            <td>{{ biggestDeal.volume }}</td>
+            <td>{{ biggestDeal.status }}</td>
+            <td *ngIf="firebaseService.loadedUsers">{{ getUser(biggestDeal.userId) }}</td>
+    </table>
+</mat-card>
