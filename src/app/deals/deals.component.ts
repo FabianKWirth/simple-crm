@@ -13,6 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class DealsComponent implements OnInit {
   @Input() deals: Deal[];
   totalVolume: number=0; 
+  formatter = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  });
 
   constructor(public dialog: MatDialog) {
 

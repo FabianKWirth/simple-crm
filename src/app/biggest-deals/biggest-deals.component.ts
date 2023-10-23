@@ -7,10 +7,14 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./biggest-deals.component.scss']
 })
 export class BiggestDealsComponent {
-  constructor(public firebaseService: FirebaseService) {
-
+  formatter = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  });
+  
+   constructor(public firebaseService: FirebaseService) {
+    this.firebaseService.loadBiggestDeals();
   }
-
 
   getUser(targetUserId: string) {
     if (!this.firebaseService.loadedUsers) {

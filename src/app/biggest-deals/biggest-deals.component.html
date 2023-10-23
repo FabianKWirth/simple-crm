@@ -9,7 +9,7 @@
             <th>user</th>
         </thead>
         <tr *ngFor="let biggestDeal of firebaseService.loadedBiggestDeals">
-            <td>{{ biggestDeal.volume }}</td>
+            <td>{{ formatter.format(biggestDeal.volume) }}</td>
             <td>{{ biggestDeal.status }}</td>
             <td *ngIf="firebaseService.loadedUsers">{{ getUser(biggestDeal.userId) }}</td>
     </table>

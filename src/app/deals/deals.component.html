@@ -12,7 +12,7 @@
       </thead>
       <tr *ngFor="let deal of deals" (click)="editDeal(deal)">
         <td>{{ deal.status }}</td>
-        <td>{{ deal.volume }}</td>
+        <td>{{ formatter.format(deal.volume) }}</td>
         <td>{{ deal.type }}</td>
         <td>{{ deal.description }}</td>
       </tr>
