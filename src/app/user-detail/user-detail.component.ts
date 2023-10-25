@@ -6,6 +6,8 @@ import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-a
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { DialogAddDealComponent } from '../dialog-add-deal/dialog-add-deal.component';
 import { FirebaseService } from 'src/services/firebase.service';
+import { Router } from '@angular/router';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -15,7 +17,13 @@ import { FirebaseService } from 'src/services/firebase.service';
 })
 export class UserDetailComponent implements OnInit {
   userId: string = "";
-  constructor(private route: ActivatedRoute, public dialog: MatDialog, public firebaseService: FirebaseService) {
+
+  showMessage: Boolean = false;
+  message: string = "";
+  messageType: string = "";
+
+
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, public firebaseService: FirebaseService, private router: Router, public notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -23,21 +31,32 @@ export class UserDetailComponent implements OnInit {
       this.userId = paramMap.get('id');
       this.firebaseService.loadDeals("userId", this.userId);
       this.firebaseService.loadUser(this.userId);
+
     })
   }
 
-  editAddressDetail() {
-    const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user = new User(this.firebaseService.loadedUser.toJSON());
-  }
+  deleteUser() {
+    this.firebaseService.deleteUser(this.userId);
+    this.notificationService.showUserDeleteMessage();
+    setTimeout(() => { 
+      this.router.navigate(["user"]);
+  }, 2000);
 
-  editUserDetail() {
-    const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.user = new User(this.firebaseService.loadedUser.toJSON());
-  }
+}
 
-  addDeal() {
-    const dialog = this.dialog.open(DialogAddDealComponent);
-    dialog.componentInstance.userId = this.userId;
-  }
+
+editAddressDetail() {
+  const dialog = this.dialog.open(DialogEditAddressComponent);
+  dialog.componentInstance.user = new User(this.firebaseService.loadedUser.toJSON());
+}
+
+editUserDetail() {
+  const dialog = this.dialog.open(DialogEditUserComponent);
+  dialog.componentInstance.user = new User(this.firebaseService.loadedUser.toJSON());
+}
+
+addDeal() {
+  const dialog = this.dialog.open(DialogAddDealComponent);
+  dialog.componentInstance.userId = this.userId;
+}
 }

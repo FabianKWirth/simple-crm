@@ -4,6 +4,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/models/user.class';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-dialog-edit-address',
@@ -18,7 +19,7 @@ export class DialogEditAddressComponent {
 
   userForm: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>, private fb: FormBuilder) {
+  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>, private fb: FormBuilder, public notificationService: NotificationService) {
     this.userForm = this.fb.group({
       street: ['', Validators.required],
       zipCode: ['', Validators.required],
@@ -37,6 +38,7 @@ export class DialogEditAddressComponent {
         then(() => {
           this.closeDialog();
           this.loading = false;
+          this.notificationService.showUserEditedMessage();
         })
         .catch((err) => {
           console.log(err);

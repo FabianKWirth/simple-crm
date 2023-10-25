@@ -8,11 +8,4 @@ import { Component, Input, SimpleChange } from '@angular/core';
 export class SystemMessageComponent {
   @Input() message: string;
   @Input() messageType: string;
-
-  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-    if (changes['messageType']) {
-      const newMessageType = changes['messageType'].currentValue;
-      console.log('messageType changed to:', newMessageType);
-    }
-  }
 }

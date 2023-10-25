@@ -2,6 +2,7 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { FirebaseAuth } from 'src/services/auth.service';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,9 @@ export class AppComponent {
   clientScreenWidth: number;
 
 
-  constructor(public firebaseAuth: FirebaseAuth, private router: Router) {
-    this.clientScreenWidth=window.innerWidth;
+  constructor(public firebaseAuth: FirebaseAuth, private router: Router, public notificationService: NotificationService) {
+    this.clientScreenWidth = window.innerWidth;
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -25,12 +27,8 @@ export class AppComponent {
     this.clientScreenWidth = event.target.innerWidth;
   }
 
-  
-
   goto(route: string): void {
-    console.log("here");
-    console.log(this.clientScreenWidth);
-    if(this.clientScreenWidth<=700){
+    if (this.clientScreenWidth <= 700) {
       this.drawer.toggle();
     }
 

@@ -7,15 +7,17 @@
 
 
     mat-card {
+        z-index: 99;
         position: relative;
-        top: 50%;
+        top: 70%;
         left: 50%;
         transform: translateX(-50%) translateY(-50%);
         width: fit-content;
         animation: shiftUp 4s;
 
-        mat-card-content{
-            font-weight: 600;
+        mat-card-content {
+            font-weight: 500;
+            font-size: 24px;
         }
     }
 
@@ -40,8 +42,11 @@
 
 .error {
     background-color: rgb(255, 66, 66);
+    color: white;
 }
 
 .success {
-    background-color: rgb(125, 255, 125);
+    background-color: #c48ea3;
+    border: solid 1px #c2185b;
+    color: white;
 }

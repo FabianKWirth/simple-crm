@@ -58,17 +58,14 @@ export class DialogAddUserComponent implements OnInit {
 
   saveUser(): void {
     if (this.userForm.valid) {
-      console.log("here")
       this.user.birthDate = this.birthDate.getTime();
       const usersRef = collection(this.firestore, "users");
       this.loading = true;
       addDoc(usersRef, this.user.toJSON()).then(() => {
-        console.log("Data saved Successfully");
         this.loading = false;
         this.closeDialog();
       })
     } else {
-      console.log("invalid");
       // Form is invalid, display error messages
       this.userForm.markAllAsTouched();
     }

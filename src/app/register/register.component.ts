@@ -41,7 +41,7 @@ export class RegisterComponent {
       const hasNumber = /[0-9]/.test(value);
       const hasLowercase = /[a-z]/.test(value);
       const hasUppercase = /[A-Z]/.test(value);
-      const islongEnought = value.length >= 0;
+      const islongEnought = value.length >= 8;
       const isValid = hasNumber && hasLowercase && hasUppercase && islongEnought;
 
       return isValid ? null : { passwordRequirements: true };
@@ -49,7 +49,6 @@ export class RegisterComponent {
   }
 
   checkValidPassword() {
-    console.log("here");
     if (this.form.get('password').hasError('passwordRequirements')) {
       this.passwordInvalid = true;
     }

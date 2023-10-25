@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/models/user.class';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from 'src/services/notification.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class DialogEditUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogEditUserComponent>,
+    public notificationService: NotificationService,
     private firebaseService: FirebaseService) {
     this.userForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -51,13 +53,13 @@ export class DialogEditUserComponent implements OnInit {
   updateUser(): void {
     if (this.userForm.valid) {
       this.user.birthDate = this.birthDate.getTime();
-      console.log(this.birthDate.getTime());
 
       this.loading = true;
       this.firebaseService.updateUserDoc(this.user.id, this.user.toJSON())
         .then(() => {
           this.closeDialog();
           this.loading = false;
+          this.notificationService.showUserEditedMessage();
         })
     } else {
       this.userForm.markAllAsTouched();

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Deal } from 'src/models/deal.class';
 import { FirebaseService } from 'src/services/firebase.service';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-dialog-edit-deal',
@@ -18,7 +20,7 @@ export class DialogEditDealComponent {
   dealForm: FormGroup;
   userId: string;
 
-  constructor(public dialogRef: MatDialogRef<DialogEditDealComponent>, public firebaseService: FirebaseService, private fb: FormBuilder) {
+  constructor(public dialogRef: MatDialogRef<DialogEditDealComponent>,private router: Router, public firebaseService: FirebaseService, private fb: FormBuilder,public notificationService: NotificationService) {
     this.deal = new Deal();
     this.dealForm = this.fb.group({
       status: ['', Validators.required],
@@ -31,10 +33,15 @@ export class DialogEditDealComponent {
     this.dialogRef.close();
   }
 
+  deleteDeal(id){
+    this.firebaseService.deleteDeal(id);
+    this.notificationService.showDealDeleteMessage();
+    this.dialogRef.close();
+  }
+
   saveDeal(): void {
     if (this.dealForm.valid) {
       this.loading = true;
-
       this.firebaseService.updateDeal(this.deal)
         .then(() => {
           if (this.firebaseService.loadedDeals) {
@@ -43,6 +50,7 @@ export class DialogEditDealComponent {
             this.firebaseService.loadDeals();
           }
           this.loading = false;
+          this.notificationService.showDealEditedMessage();
           this.closeDialog();
         });
     } else {

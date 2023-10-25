@@ -3,6 +3,7 @@ import { Deal } from 'src/models/deal.class';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FirebaseService } from 'src/services/firebase.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-dialog-add-deal',
@@ -18,7 +19,12 @@ export class DialogAddDealComponent {
   loading = false;
   dialog: any;
 
-  constructor(public dialogRef: MatDialogRef<DialogAddDealComponent>, public firebaseService: FirebaseService, private fb: FormBuilder) {
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddDealComponent>,
+    public firebaseService: FirebaseService,
+    private fb: FormBuilder,
+    private notificationService: NotificationService
+  ) {
     this.deal = new Deal();
     this.dealForm = this.fb.group({
       status: ['', Validators.required],
@@ -40,10 +46,11 @@ export class DialogAddDealComponent {
         .then(() => {
           if (this.firebaseService.loadedDeals) {
             this.firebaseService.loadedDeals.push(this.deal);
-          }else{
+          } else {
             this.firebaseService.loadDeals();
           }
           this.loading = false;
+          this.notificationService.showDealAddedMessage();
           this.closeDialog();
         });
     } else {

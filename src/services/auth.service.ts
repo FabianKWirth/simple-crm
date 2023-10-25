@@ -30,11 +30,11 @@ export class FirebaseAuth implements OnDestroy {
                 const user = userCredential.user;
                 this.idTokenSubscription = this.idToken$.subscribe((token: string | null) => {
                     //handle idToken changes here. Note, that user will be null if there is no currently logged in user.
-                    console.log(user);
                     this.refreshToken = token;
                 })
             })
             .catch((error) => {
+                this.showFailedRegisterMessage();
                 const errorCode = error.code;
                 const errorMessage = error.message;
             });
@@ -48,10 +48,8 @@ export class FirebaseAuth implements OnDestroy {
         signInWithEmailAndPassword(this.auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(userCredential);
                 this.idTokenSubscription = this.idToken$.subscribe((token: string | null) => {
                     //handle idToken changes here. Note, that user will be null if there is no currently logged in user.
-                    console.log(user);
                     this.refreshToken = token;
                     this.showSuccessLoginMessage();
                 })
@@ -95,6 +93,17 @@ export class FirebaseAuth implements OnDestroy {
             this.showMessage = false;
         }, 4000);
     }
+
+
+    showFailedRegisterMessage(){
+        this.showMessage = true;
+        this.message = "Registration failed. Please check wether you already have an account with this address registered";
+        this.messageType = "error";
+        setTimeout(() => {
+            this.showMessage = false;
+        }, 4000);
+    }
+
 
 
     ngOnDestroy() {

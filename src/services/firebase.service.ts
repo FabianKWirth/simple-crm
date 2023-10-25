@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore/';
-import { collection, doc, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { Deal } from 'src/models/deal.class';
 import { User } from 'src/models/user.class';
 
@@ -8,6 +8,7 @@ import { User } from 'src/models/user.class';
   providedIn: 'root'
 })
 export class FirebaseService {
+
   unsubUserData: any;
   loadedDeals: Deal[];
   unsubDeals: any;
@@ -28,6 +29,26 @@ export class FirebaseService {
       this.loadedUser = new User(doc.data());
       this.loadedUser.id = userId;
     });
+  }
+
+  async deleteUser(userId: string) {
+    console.log(userId + " deleted");
+    deleteDoc(doc(this.firestore, "users", userId));
+    const q = query(collection(this.firestore, "deals"), where("userId", "==", userId));
+    const querySnapshot = await getDocs(q);
+    let docIdsTodelete = [];
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      docIdsTodelete.push(doc.id);
+    })
+
+    docIdsTodelete.forEach((dealId) => {
+      deleteDoc(doc(this.firestore, "deals", dealId));
+    });
+  }
+
+  deleteDeal(dealId) {
+    deleteDoc(doc(this.firestore, "deals", dealId));
   }
 
   async updateUserDoc(userId, updateData) {
