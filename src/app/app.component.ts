@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { FirebaseAuth } from 'src/services/auth.service';
 
 @Component({
@@ -8,9 +10,31 @@ import { FirebaseAuth } from 'src/services/auth.service';
 })
 export class AppComponent {
   title = 'simple-crm';
+  opened: boolean = true;
+  @ViewChild('drawer') drawer: MatDrawer;
 
-  constructor(public firebaseAuth: FirebaseAuth){
-    
+  clientScreenWidth: number;
+
+
+  constructor(public firebaseAuth: FirebaseAuth, private router: Router) {
+    this.clientScreenWidth=window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.clientScreenWidth = event.target.innerWidth;
+  }
+
+  
+
+  goto(route: string): void {
+    console.log("here");
+    console.log(this.clientScreenWidth);
+    if(this.clientScreenWidth<=700){
+      this.drawer.toggle();
+    }
+
+    this.router.navigate([route]);
   }
 
 }

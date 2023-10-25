@@ -3,18 +3,23 @@
         <mat-card-title>Register</mat-card-title>
         <mat-card-content>
             <form [formGroup]="form" (ngSubmit)="submit()">
-                <p>
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="email" formControlName="email">
-                    </mat-form-field>
-                </p>
 
-                <p>
-                    <mat-form-field>
-                        <input type="password" matInput placeholder="Password" formControlName="password">
-                    </mat-form-field>
-                </p>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
 
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Password" formControlName="password"
+                        (blur)="checkValidPassword()">
+                    <mat-error *ngIf="form.get('password').hasError('required')">
+                        Password is required.
+                    </mat-error>
+                    <mat-error *ngIf="passwordInvalid">
+                        Password must be contain 8 characters, at least one number, one lowercase
+                        letter, and one uppercase letter.
+                    </mat-error>
+                </mat-form-field>
+                <div *ngIf="passwordInvalid" class="spacer"></div>
                 <div class="register-option">
                     <div class="button">
                         <button type="submit" mat-button>Create Account</button>
@@ -26,7 +31,7 @@
             </form>
         </mat-card-content>
     </mat-card>
-
-    <app-system-message class="absolute" *ngIf="auth.showMessage" [message]="auth.message"
-        [messageType]="auth.messageType"></app-system-message>
 </div>
+
+<app-system-message class="absolute" *ngIf="auth.showMessage" [message]="auth.message"
+    [messageType]="auth.messageType"></app-system-message>

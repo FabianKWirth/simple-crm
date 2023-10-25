@@ -59,3 +59,10 @@ mat-card {
 .mat-mdc-mini-fab.mat-primary {
     --mdc-fab-container-color: #c2185b;
 }
+
+.default-object {
+    width: clamp(300px, calc(100% - 32px), 1000px);
+    height: 100%;
+    margin: 16px;
+    margin-bottom: 0px;
+}

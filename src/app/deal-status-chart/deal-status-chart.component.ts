@@ -1,5 +1,5 @@
-import { Component, SimpleChanges } from '@angular/core';
-import { Chart, ChartConfigurationCustomTypesPerDataset, ChartTypeRegistry } from 'chart.js/auto';
+import { Component } from '@angular/core';
+import { Chart } from 'chart.js/auto';
 import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
@@ -13,9 +13,7 @@ export class DealStatusChartComponent {
 
 
   constructor(public firebaseService: FirebaseService) {
-    if (!this.firebaseService.loadedDeals) {
       this.firebaseService.loadDeals();
-    }
   }
 
   names: string[] = [];
@@ -49,7 +47,8 @@ export class DealStatusChartComponent {
         }
   }
 
-  createGraphElement() {
+  async createGraphElement() {
+    await this.destroyGraphElement();
     const canvas = document.createElement("canvas");
     // Set the canvas ID to "ctx"
     canvas.id = "ctx";
@@ -66,10 +65,8 @@ export class DealStatusChartComponent {
     }
   }
 
-  createChart(labels, values) {
-
-    this.destroyGraphElement();
-    this.createGraphElement();
+ async createChart(labels, values) {
+    await this.createGraphElement();
 
     new Chart("ctx", {
       type: 'bar',

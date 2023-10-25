@@ -63,15 +63,17 @@ export class FirebaseService {
   */
   async loadDeals(indexName?: any, indexValue: String = "") {
     const q = this.getQuery(indexName, indexValue);
-    this.unsubDeals = onSnapshot(q, (querySnapshot) => {
-      this.loadedDeals = [];
-      querySnapshot.forEach((doc) => {
-        let docData = doc.data();
-        const deal = new Deal(docData);
-        deal.id = doc.id;
-        this.loadedDeals.push(deal);
-      })
-    });
+    if (!this.unsubDeals) {
+      this.unsubDeals = onSnapshot(q, (querySnapshot) => {
+        this.loadedDeals = [];
+        querySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          const deal = new Deal(docData);
+          deal.id = doc.id;
+          this.loadedDeals.push(deal);
+        })
+      });
+    }
   };
 
 

@@ -29,20 +29,21 @@
             align-items: center;
             flex-direction: row;
             border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            background-color: #212121;
 
             img {
                 object-fit: cover;
                 max-height: 62px;
 
                 border-radius: 8px;
-                margin:8px;
+                margin: 8px;
             }
 
             .mobile-show {
                 display: none;
             }
 
-            @media screen and (max-width: 600px) {
+            @media screen and (max-width: 700px) {
                 .mobile-show {
                     display: block;
                 }
@@ -76,17 +77,18 @@
 
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 700px) {
         .sidenav {
             min-width: 100%;
+
             .sidenav-header {
-            justify-content: space-between;
+                justify-content: space-between;
             }
         }
 
         mat-toolbar {
             min-height: 56px;
-            background-color: black;
+            background-color: #212121;
         }
     }
 

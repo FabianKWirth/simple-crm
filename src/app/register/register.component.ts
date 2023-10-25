@@ -10,6 +10,7 @@ import { FirebaseAuth } from 'src/services/auth.service';
 export class RegisterComponent {
   email: string;
   password: string;
+  passwordInvalid: boolean = false;
 
   form: FormGroup;
 
@@ -40,13 +41,20 @@ export class RegisterComponent {
       const hasNumber = /[0-9]/.test(value);
       const hasLowercase = /[a-z]/.test(value);
       const hasUppercase = /[A-Z]/.test(value);
-
-      const isValid = hasNumber && hasLowercase && hasUppercase;
+      const islongEnought = value.length >= 0;
+      const isValid = hasNumber && hasLowercase && hasUppercase && islongEnought;
 
       return isValid ? null : { passwordRequirements: true };
     };
   }
-  
+
+  checkValidPassword() {
+    console.log("here");
+    if (this.form.get('password').hasError('passwordRequirements')) {
+      this.passwordInvalid = true;
+    }
+  }
+
   @Input() error: string | null;
 
   @Output() submitEM = new EventEmitter();

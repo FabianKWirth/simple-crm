@@ -72,7 +72,7 @@ export class FirebaseAuth implements OnDestroy {
     showSuccessLogoutMessage(){
         this.showMessage = true;
         this.message = "Logout erfolgreich";
-        this.messageType = "Success";
+        this.messageType = "success";
         setTimeout(() => {
             this.showMessage = false;
         }, 4000);
@@ -81,7 +81,7 @@ export class FirebaseAuth implements OnDestroy {
     showSuccessLoginMessage(){
         this.showMessage = true;
         this.message = "Logout erfolgreich";
-        this.messageType = "Success";
+        this.messageType = "success";
         setTimeout(() => {
             this.showMessage = false;
         }, 4000);
@@ -90,7 +90,7 @@ export class FirebaseAuth implements OnDestroy {
     showFailedLoginMessage(){
         this.showMessage = true;
         this.message = "Login failed";
-        this.messageType = "Error";
+        this.messageType = "error";
         setTimeout(() => {
             this.showMessage = false;
         }, 4000);
