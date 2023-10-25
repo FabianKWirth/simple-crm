@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Deal } from 'src/models/deal.class';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FirebaseService } from 'src/services/firebase.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-add-deal',
@@ -9,7 +10,7 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./dialog-add-deal.component.scss']
 })
 export class DialogAddDealComponent {
-
+  dealForm: FormGroup;
   deal: Deal;
   @Input() userId: string;
 
@@ -17,25 +18,38 @@ export class DialogAddDealComponent {
   loading = false;
   dialog: any;
 
-  constructor(public dialogRef: MatDialogRef<DialogAddDealComponent>, public firebaseService: FirebaseService) {
+  constructor(public dialogRef: MatDialogRef<DialogAddDealComponent>, public firebaseService: FirebaseService, private fb: FormBuilder) {
     this.deal = new Deal();
+    this.dealForm = this.fb.group({
+      status: ['', Validators.required],
+      description: '',
+      volume: [null, [Validators.required, Validators.min(0.01)]],
+    });
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
-  async saveDeal() {
-    this.deal.userId=this.userId;
-    this.loading = true;
-    console.log(this.deal);
 
-    this.firebaseService.loadedDeals.push(this.deal);
-    this.firebaseService.updateDeal(this.deal)
-      .then(() => {
-        this.loading = false;
-        this.closeDialog();
-      });
+  saveDeal(): void {
+    if (this.dealForm.valid) {
+      this.deal.userId = this.userId;
+      this.loading = true;
+      this.firebaseService.updateDeal(this.deal)
+        .then(() => {
+          if (this.firebaseService.loadedDeals) {
+            this.firebaseService.loadedDeals.push(this.deal);
+          }else{
+            this.firebaseService.loadDeals();
+          }
+          this.loading = false;
+          this.closeDialog();
+        });
+    } else {
+      // Form is invalid, display error messages
+      this.dealForm.markAllAsTouched();
+    }
   }
 
 }

@@ -1,25 +1,39 @@
-<div class="default-form">
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    <h1 mat-dialog-title>Edit Address</h1>
-    <div mat-dialog-content class="default-dialog">
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Street + House No.</mat-label>
-            <input [disabled]="loading" matInput [(ngModel)]="user.street" placeholder="Street + House No.">
-        </mat-form-field>
-
-        <div class="city full-width">
-            <mat-form-field appearance="outline">
-                <mat-label>PLZ</mat-label>
-                <input matInput [disabled]="loading" [(ngModel)]="user.zipCode" placeholder="PLZ">
+<form [formGroup]="userForm">
+    <div class="default-form">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+        <h1 mat-dialog-title>Edit Address</h1>
+        <div mat-dialog-content class="default-dialog">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Street + House No.</mat-label>
+                <input [disabled]="loading" matInput formControlName="street" [(ngModel)]="user.street"
+                    placeholder="Street + House No." />
+                <mat-error *ngIf="userForm.get('street').hasError('required') && userForm.get('street').touched">
+                    Street is required.
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="second-row">
-                <mat-label>City</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.city" placeholder="City">
-            </mat-form-field>
+            <div class="city full-width">
+                <mat-form-field appearance="outline">
+                    <mat-label>PLZ</mat-label>
+                    <input matInput [disabled]="loading" formControlName="zipCode" [(ngModel)]="user.zipCode"
+                        placeholder="PLZ" />
+                    <mat-error *ngIf="userForm.get('zipCode').hasError('required') && userForm.get('zipCode').touched">
+                        PLZ is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="second-row">
+                    <mat-label>City</mat-label>
+                    <input [disabled]="loading" matInput formControlName="city" [(ngModel)]="user.city"
+                        placeholder="City" />
+                    <mat-error *ngIf="userForm.get('city').hasError('required') && userForm.get('city').touched">
+                        City is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <button mat-button (click)="closeDialog()">No Thanks</button>
+            <button mat-button [disabled]="userForm.invalid" (click)="updateUser()" cdkFocusInitial>Save</button>
         </div>
-
-        <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button (click)="updateUser()" cdkFocusInitial>Save</button>
     </div>
-</div>
+</form>

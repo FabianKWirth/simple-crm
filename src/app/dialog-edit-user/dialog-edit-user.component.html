@@ -1,34 +1,49 @@
-<div class="default-form">
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    <h1 mat-dialog-title>Edit-User</h1>
-    <div mat-dialog-content class="edit-user-dialog">
+<form [formGroup]="userForm">
+    <div class="default-form">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+      <h1 mat-dialog-title>Edit-User</h1>
+      <div mat-dialog-content class="edit-user-dialog">
         <div class="names full-width">
-            <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.firstName" placeholder="Johann">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="second-row">
-                <mat-label>Last Name</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.lastName" placeholder="Klein">
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" placeholder="Johann" [(ngModel)]="user.firstName"/>
+            <mat-error *ngIf="userForm.get('firstName').hasError('required') && userForm.get('firstName').touched">
+              First Name is required.
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="second-row">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Klein" [(ngModel)]="user.lastName"/>
+            <mat-error *ngIf="userForm.get('lastName').hasError('required') && userForm.get('lastName').touched">
+              Last Name is required.
+            </mat-error>
+          </mat-form-field>
         </div>
-
+  
         <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Mail</mat-label>
-            <input type="mail" [disabled]="loading" matInput [(ngModel)]="user.mail" placeholder="max@mustermann.de">
+          <mat-label>Mail</mat-label>
+          <input matInput formControlName="mail" placeholder="max@mustermann.de" [(ngModel)]="user.mail" />
+          <mat-error *ngIf="userForm.get('mail').hasError('required') && userForm.get('mail').touched">
+            Mail is required.
+          </mat-error>
+          <mat-error *ngIf="userForm.get('mail').hasError('email') && userForm.get('mail').touched">
+            Please enter a valid email address (e.g., example@example.com).
+          </mat-error>
         </mat-form-field>
-
+  
         <mat-form-field color="accent" appearance="outline" class="full-width">
-            <mat-label>Birth Date</mat-label>
-            <input [disabled]="loading" matInput [matDatepicker]="picker1" [ngModel]="birthDate"
-                (dateChange)="onDateChange($event)">
-
-            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+          <mat-label>Birth Date</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="birthDate" [ngModel]="birthDate"/>
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <mat-error *ngIf="userForm.get('birthDate').hasError('required') && userForm.get('birthDate').touched">
+            Birth Date is required.
+          </mat-error>
         </mat-form-field>
-
         <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button (click)="updateUser()" cdkFocusInitial>Save</button>
+        <button mat-button (click)="updateUser()" cdkFocusInitial [disabled]="userForm.invalid">Save</button>
+      </div>
     </div>
-</div>
+  </form>
+  

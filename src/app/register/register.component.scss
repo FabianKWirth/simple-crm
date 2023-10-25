@@ -12,6 +12,10 @@ mat-card {
   display: flex;
   justify-content: center;
 
+  @media screen and (max-width: 400px) {
+    width: calc(100%);
+  }
+
   form {
     width: 100%;
     display: flex;

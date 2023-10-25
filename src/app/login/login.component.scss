@@ -12,6 +12,10 @@ mat-card {
   display: flex;
   justify-content: center;
 
+  @media screen and (max-width: 400px) {
+    width: calc(100%);
+  }
+
   form {
     width: 100%;
     display: flex;
@@ -26,7 +30,7 @@ mat-card {
 
 .mat-form-field {
   width: 100%;
-  min-width: 300px;
+  min-width: 250px;
 }
 
 mat-card-title,

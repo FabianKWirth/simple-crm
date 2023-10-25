@@ -10,23 +10,25 @@
                         Email is required.
                     </mat-error>
                     <mat-error *ngIf="form.get('email').hasError('email')">
-                        Please provide a proper Email
+                        Please provide a proper Email.
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
                     <input type="password" matInput placeholder="Password" formControlName="password">
+                    <mat-error *ngIf="form.get('password').hasError('required')">
+                        Password is required.
+                    </mat-error>
                 </mat-form-field>
 
                 <div class="login-options">
                     <div class="button">
-                        <button type="submit" (click)=submit() mat-button>Login</button>
+                        <button type="submit" [disabled]="form.invalid" (click)=submit() mat-button>Login</button>
                     </div>
                     <div class="button">
                         <button type='button' (click)="guestLogin()" mat-button>Guest-Login</button>
                     </div>
                 </div>
-
                 <div class="button">
                     <button type='button' (click)="auth.authType='register'" mat-button>Register</button>
                 </div>

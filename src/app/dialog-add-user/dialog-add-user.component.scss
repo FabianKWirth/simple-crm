@@ -1,5 +1,33 @@
 .full-width {
     width: 100%;
     display: flex;
-    gap: 16px;
 }
+
+.names, .city {
+    display: flex;
+    gap:16px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 500px) {
+    form{
+        gap: 24px;
+    }
+
+    .names, .city {
+        display: flex;
+        height: min-content;
+        flex-direction: column;
+        gap:0px;
+
+        :first-child{
+            margin-bottom: 32px;
+        }
+    }
+}
+
+

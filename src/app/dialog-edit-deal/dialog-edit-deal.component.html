@@ -1,23 +1,35 @@
-<div class="default-form">
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-    <h1 mat-dialog-title>Edit-Deal</h1>
-    <mat-form-field>
+<form [formGroup]="dealForm">
+    <div class="default-form">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+      <h1 mat-dialog-title>Add-Deal</h1>
+      <mat-form-field>
         <mat-label>Select Status</mat-label>
-        <mat-select [(ngModel)]="deal.status" default="deal.status">
-            <mat-option *ngFor="let status of dealStatusTypes" [value]="status">{{ status }}</mat-option>
+        <mat-select formControlName="status" [(ngModel)]="deal.status">
+          <mat-option *ngFor="let status of dealStatusTypes" [value]="status">{{ status }}</mat-option>
         </mat-select>
-    </mat-form-field>
-    <mat-form-field>
+        <mat-error *ngIf="dealForm.get('status').hasError('required') && dealForm.get('status').touched">
+          Status is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea matInput [(ngModel)]="deal.description">{{ deal.description }}</textarea>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
+        <textarea matInput [(ngModel)]="deal.description" formControlName="description">{{ deal.description }}</textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Value</mat-label>
-        <input [disabled]="loading" matInput type="number" [(ngModel)]="deal.volume" step="0.01">
-    </mat-form-field>
-
-    <div mat-dialog-actions>
+        <input [disabled]="loading" matInput type="number" formControlName="volume" step="0.01" [(ngModel)]="deal.volume"/>
+        <mat-error *ngIf="dealForm.get('volume').hasError('required') && dealForm.get('volume').touched">
+          Value is required.
+        </mat-error>
+        <mat-error *ngIf="dealForm.get('volume').hasError('min') && dealForm.get('volume').touched">
+          Value must be greater than or equal to 0.01.
+        </mat-error>
+      </mat-form-field>
+  
+      <div mat-dialog-actions>
         <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button (click)="saveDeal()" cdkFocusInitial>Ok</button>
+        <button mat-button [disabled]="dealForm.invalid" (click)="saveDeal()" cdkFocusInitial>Save</button>
+      </div>
     </div>
-</div>
+  </form>
+  

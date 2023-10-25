@@ -76,7 +76,6 @@ export class FirebaseService {
     }
   };
 
-
   getBiggestDealsQuery() {
     return query(collection(this.firestore, "deals"), orderBy("volume", "desc"), limit(5));
   }
@@ -126,7 +125,6 @@ export class FirebaseService {
       })
     });
   };
-
 
   ngOnDestroy() {
     if (this.unsubUsers) {

@@ -36,5 +36,4 @@ export class LoginComponent {
   @Input() error: string | null;
 
   @Output() submitEM = new EventEmitter();
-
 }

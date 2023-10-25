@@ -2,51 +2,82 @@
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     <h1 mat-dialog-title>Add-User</h1>
     <div mat-dialog-content class="add-user-dialog">
-        <div class="names full-width">
-            <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.firstName" placeholder="Johann">
+        <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+            <div class="names full-width">
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input [disabled]="loading" matInput formControlName="firstName" [(ngModel)]="user.firstName"
+                        placeholder="Johann" required />
+                    <mat-error
+                        *ngIf="userForm.controls['firstName']?.invalid && userForm.controls['firstName']?.touched">
+                        First Name is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="second-row">
+                    <mat-label>Last Name</mat-label>
+                    <input [disabled]="loading" matInput formControlName="lastName" [(ngModel)]="user.lastName"
+                        placeholder="Klein" required />
+                    <mat-error *ngIf="userForm.controls['lastName']?.invalid && userForm.controls['lastName']?.touched">
+                        Last Name is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input [disabled]="loading" matInput formControlName="mail" [(ngModel)]="user.mail"
+                    placeholder="max@mustermann.de" required />
+                <mat-error *ngIf="userForm.controls['mail']?.invalid && userForm.controls['mail']?.touched">
+                    Mail is required and must be a valid email address (e.g., example@example.com).
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="second-row">
-                <mat-label>Last Name</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.lastName" placeholder="Klein">
-            </mat-form-field>
-        </div>
-
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Mail</mat-label>
-            <input type="mail" [disabled]="loading" matInput [(ngModel)]="user.mail" placeholder="max@mustermann.de">
-        </mat-form-field>
-
-        <mat-form-field color="accent" appearance="outline" class="full-width">
-            <mat-label>Birth Date</mat-label>
-            <input [disabled]="loading" matInput [matDatepicker]="picker1" [(ngModel)]="birthDate">
-
-            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Street + House No.</mat-label>
-            <input [disabled]="loading" matInput [(ngModel)]="user.street" placeholder="Street + House No.">
-        </mat-form-field>
-
-        <div class="city full-width">
-            <mat-form-field appearance="outline">
-                <mat-label>PLZ</mat-label>
-                <input matInput [disabled]="loading" [(ngModel)]="user.zipCode" placeholder="PLZ">
+            <mat-form-field color="accent" appearance="outline" class="full-width">
+                <mat-label>Birth Date</mat-label>
+                <input [disabled]="loading" matInput [matDatepicker]="picker1" [(ngModel)]="birthDate"
+                    formControlName="birthDate" required [matDatepickerFilter]="dateFilter" />
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="userForm.controls['birthDate']?.invalid && userForm.controls['birthDate']?.touched">
+                    Birth Date is required and must be in the past.
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="second-row">
-                <mat-label>City</mat-label>
-                <input [disabled]="loading" matInput [(ngModel)]="user.city" placeholder="City">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Street + House No.</mat-label>
+                <input [disabled]="loading" matInput formControlName="street" [(ngModel)]="user.street"
+                    placeholder="Street + House No." required />
+                <mat-error *ngIf="userForm.controls['street']?.invalid && userForm.controls['street']?.touched">
+                    Street is required.
+                </mat-error>
             </mat-form-field>
-        </div>
 
-    </div>
-    <div mat-dialog-actions>
-        <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button (click)="saveUser()" cdkFocusInitial>Ok</button>
+            <div class="city full-width">
+                <mat-form-field appearance="outline">
+                    <mat-label>PLZ</mat-label>
+                    <input matInput formControlName="zipCode" [(ngModel)]="user.zipCode" placeholder="PLZ" required />
+                    <mat-error *ngIf="userForm.controls['zipCode']?.invalid && userForm.controls['zipCode']?.touched">
+                        PLZ is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="second-row">
+                    <mat-label>City</mat-label>
+                    <input [disabled]="loading" matInput formControlName="city" [(ngModel)]="user.city"
+                        placeholder="City" required />
+                    <mat-error *ngIf="userForm.controls['city']?.invalid && userForm.controls['city']?.touched">
+                        City is required.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div mat-dialog-actions>
+                <button mat-button (click)="closeDialog()">No Thanks</button>
+                <button mat-button [disabled]="userForm.invalid" cdkFocusInitial type="submit">
+                    Ok
+                </button>
+            </div>
+        </form>
     </div>
 </div>
