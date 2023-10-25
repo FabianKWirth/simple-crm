@@ -1,0 +1,9 @@
+<div class="auth-container">
+    <div *ngIf="auth.authType === 'register'; else login">
+        <app-register></app-register>
+    </div>
+
+    <ng-template #login>
+        <app-login></app-login>
+    </ng-template>
+</div>

@@ -1,0 +1,45 @@
+.message-container {
+
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vh;
+
+    mat-card {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: fit-content;
+        animation: shiftUp 4s;
+    }
+
+    @keyframes shiftUp {
+        0%{
+            top: 100%; 
+        }
+        15%{
+            top: 50%;
+        }
+
+        85%{
+            top: 50%;
+        }
+
+        100%{
+            top: 100%; 
+        }
+        
+        
+    }
+
+
+}
+
+.error {
+    background-color: red;
+}
+
+.success {
+    background-color: green;
+}

@@ -1,22 +1,22 @@
-<div class="default-card">
-  <mat-card *ngIf="deals.length > 0;else noDealsBlock">
+<div *ngIf="deals.length > 0;else noDealsBlock">
+  <mat-card-title>Current active deals</mat-card-title>
+  <mat-card-subtitle>Total Sale Volume: {{ totalVolume }}</mat-card-subtitle>
+  <table class=" default-table">
+    <thead>
+      <th>status</th>
+      <th>volume</th>
+      <th>type</th>
+      <th>description</th>
+    </thead>
+    <tr *ngFor="let deal of deals" (click)="editDeal(deal)">
+      <td>{{ deal.status }}</td>
+      <td>{{ formatter.format(deal.volume) }}</td>
+      <td>{{ deal.type }}</td>
+      <td>{{ deal.description }}</td>
+    </tr>
+  </table>
 
-    <mat-card-title>Current active deals</mat-card-title>
-    <mat-card-subtitle>Total Sale Volume: {{ totalVolume }}</mat-card-subtitle>
-    <table class="default-table">
-      <thead>
-        <th>status</th>
-        <th>volume</th>
-        <th>type</th>
-        <th>description</th>
-      </thead>
-      <tr *ngFor="let deal of deals" (click)="editDeal(deal)">
-        <td>{{ deal.status }}</td>
-        <td>{{ formatter.format(deal.volume) }}</td>
-        <td>{{ deal.type }}</td>
-        <td>{{ deal.description }}</td>
-      </tr>
-    </table>
-  </mat-card>
-  <ng-template #noDealsBlock>Currently, there are no active deals.</ng-template>
+
 </div>
+
+<ng-template #noDealsBlock>Currently, there are no active deals.</ng-template>

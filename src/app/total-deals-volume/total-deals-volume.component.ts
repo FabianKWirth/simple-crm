@@ -7,7 +7,6 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./total-deals-volume.component.scss']
 })
 export class TotalDealsVolumeComponent {
-
   totalVolume: number=0;
   constructor(public firebaseService: FirebaseService) {
     this.firebaseService.loadDeals();
@@ -27,7 +26,5 @@ export class TotalDealsVolumeComponent {
   formatter = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: 'EUR',
-  });
-
- 
+  }); 
 }

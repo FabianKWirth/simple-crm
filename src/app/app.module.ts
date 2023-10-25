@@ -39,9 +39,14 @@ import { DatePipe } from '@angular/common';
 import { UserCountComponent } from './user-count/user-count.component';
 import { BiggestDealsComponent } from './biggest-deals/biggest-deals.component';
 import { TotalDealsVolumeComponent } from './total-deals-volume/total-deals-volume.component';
-
-
-
+import { TotalClosedWonDealsVolumeComponent } from './total-closed-won-deals-volume/total-closed-won-deals-volume.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { DealStatusChartComponent } from './deal-status-chart/deal-status-chart.component';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { SystemMessageComponent } from './system-message/system-message.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +63,14 @@ import { TotalDealsVolumeComponent } from './total-deals-volume/total-deals-volu
     NewsFeedComponent,
     UserCountComponent,
     BiggestDealsComponent,
-    TotalDealsVolumeComponent
+    TotalDealsVolumeComponent,
+    TotalClosedWonDealsVolumeComponent,
+    LegalNoticeComponent,
+    DealStatusChartComponent,
+    LoginComponent,
+    RegisterComponent,
+    SystemMessageComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -83,10 +95,11 @@ import { TotalDealsVolumeComponent } from './total-deals-volume/total-deals-volu
     ReactiveFormsModule,
     HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth())
   ],
   providers: [
-    ScreenTrackingService, UserTrackingService, DatePipe,
+    ScreenTrackingService, UserTrackingService, DatePipe
   ],
   bootstrap: [AppComponent]
 })

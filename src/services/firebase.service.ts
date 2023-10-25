@@ -127,9 +127,20 @@ export class FirebaseService {
 
 
   ngOnDestroy() {
-    this.unsubUsers();
-    this.unsubDeals();
-    this.unsubUserData();
-    this.unsubbiggestDealsData();
+    if (this.unsubUsers) {
+      this.unsubUsers();
+    }
+
+    if (this.unsubDeals) {
+      this.unsubDeals();
+    }
+
+    if (this.unsubUserData) {
+      this.unsubUserData();
+    }
+
+    if (this.unsubbiggestDealsData) {
+      this.unsubbiggestDealsData();
+    }
   }
 }

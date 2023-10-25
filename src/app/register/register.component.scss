@@ -1,0 +1,35 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background-color: #303030;
+}
+
+.register-options {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.absolute{
+  position: absolute;
+  top:0;
+  left:0;
+}

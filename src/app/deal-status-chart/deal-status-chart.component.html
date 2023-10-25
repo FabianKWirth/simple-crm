@@ -1,0 +1,4 @@
+<mat-card *ngIf="firebaseService.loadedDeals" style="width:100%">{{ getChartValues() }}
+    Volume per Deal Type
+    <div id="graphContainer"><canvas id="ctx"></canvas></div>
+</mat-card>

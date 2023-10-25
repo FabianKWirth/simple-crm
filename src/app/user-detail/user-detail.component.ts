@@ -10,12 +10,12 @@ import { FirebaseService } from 'src/services/firebase.service';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.scss']
+  styleUrls: ['./user-detail.component.scss'],
+  providers: [FirebaseService]
 })
 export class UserDetailComponent implements OnInit {
   userId: string = "";
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public firebaseService: FirebaseService) {
-
   }
 
   ngOnInit() {

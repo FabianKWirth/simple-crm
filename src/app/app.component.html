@@ -1,23 +1,40 @@
-<mat-drawer-container class="math-drawer-container" autosize>
-  <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
-    <div class="logo-container">LOGO</div>
-    <ul>
-      <li routerLink="/"><mat-icon>perm_identity</mat-icon> Dashboard</li>
-      <li routerLink="user"><mat-icon>fact_check</mat-icon>Users</li>
-    </ul>
-  </mat-drawer>
+<div *ngIf="firebaseAuth.refreshToken; else auth">
+  <mat-drawer-container class="math-drawer-container" autosize>
+    <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
+      <div class='sidenav-header'>
+        <img src="../assets/icons/SimpleCrm.png">
+        <button mat-icon-button class="burger-icon mobile-show" (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
 
-  <div class="sidenav-content">
-    <mat-toolbar>
-      <button mat-icon-button class="burger-icon" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Simple CRM</span>
-      <span class="example-spacer"></span>
-    </mat-toolbar>
-    <div class="router-container">
-      <router-outlet></router-outlet>
+      <ul>
+        <li routerLink="/"><mat-icon>perm_identity</mat-icon>Dashboard</li>
+        <li routerLink="/user"><mat-icon>fact_check</mat-icon>Users</li>
+        <li routerLink="/legalnotice"><mat-icon>info</mat-icon>Legal Notice</li>
+      </ul>
+
+
+    </mat-drawer>
+
+    <div class="header-content">
+      <mat-toolbar>
+
+        <button mat-icon-button class="burger-icon" (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Simple CRM</span>
+        <button mat-button (click)="firebaseAuth.logout()">Logout</button>
+      </mat-toolbar>
+      <div class="router-container">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </div>
 
-</mat-drawer-container>
+  </mat-drawer-container>
+</div>
+
+
+<ng-template #auth>
+  <app-auth></app-auth>
+</ng-template>

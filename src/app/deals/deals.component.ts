@@ -42,7 +42,6 @@ export class DealsComponent implements OnInit {
   editDeal(deal: Deal){
     const dialog = this.dialog.open(DialogEditDealComponent);
     dialog.componentInstance.deal = new Deal(deal.toJSON());
-    
   }
   
 

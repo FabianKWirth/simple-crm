@@ -1,22 +1,59 @@
+.default-form {
+    width: clamp(300px, 100%, 90000px);
+
+    .default-dialog {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+
+        mat-select {
+            color: white;
+
+            mat-option {
+                color: white;
+            }
+        }
+
+    }
+}
+
 .math-drawer-container {
     height: 100vh;
 
-
     .sidenav {
 
-        min-width: 300px;
+        min-width: 200px;
 
-        .logo-container {
-            min-height: 64px;
+        .sidenav-header {
             display: flex;
             align-items: center;
-            padding: 0 16px 0 16px;
+            flex-direction: row;
             border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+            img {
+                object-fit: cover;
+                max-height: 62px;
+
+                border-radius: 8px;
+                margin:8px;
+            }
+
+            .mobile-show {
+                display: none;
+            }
+
+            @media screen and (max-width: 600px) {
+                .mobile-show {
+                    display: block;
+                }
+            }
         }
+
 
         ul {
             list-style-type: none;
             padding: 0;
+
             li {
                 padding-left: 16px;
                 padding-right: 16px;
@@ -26,17 +63,32 @@
                 gap: 8px;
                 cursor: pointer;
 
-                &:hover{
+                &:hover {
                     color: rgb(255, 91, 91);
                 }
-                
-                &:focus{
+
+                &:focus {
                     outline: none;
                 }
             }
         }
+
+
     }
 
+    @media screen and (max-width: 600px) {
+        .sidenav {
+            min-width: 100%;
+            .sidenav-header {
+            justify-content: space-between;
+            }
+        }
+
+        mat-toolbar {
+            min-height: 56px;
+            background-color: black;
+        }
+    }
 
     .sidenav-content {
         mat-toolbar {
@@ -44,7 +96,7 @@
         }
 
 
-        .router-container{
+        .router-container {
             padding: 8px;
         }
 
@@ -52,11 +104,26 @@
             cursor: pointer;
         }
     }
+
+    .mat-toolbar {
+
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        min-height: 80px;
+    }
 }
 
-.default-form{
+.default-form {
     width: clamp(300px, 100%, 90000px);
-    .default-dialog{
+
+    .default-dialog {
         display: flex;
         flex-direction: column;
         padding: 16px;
