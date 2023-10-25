@@ -42,7 +42,7 @@
           </mat-error>
         </mat-form-field>
         <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button (click)="updateUser()" cdkFocusInitial [disabled]="userForm.invalid">Save</button>
+        <button mat-button (click)="updateUser()" [disabled]="userForm.invalid">Save</button>
       </div>
     </div>
   </form>

@@ -61,11 +61,12 @@ mat-card {
 }
 
 .default-object {
-    width: clamp(300px, calc(100% - 32px), 1000px);
+    width: clamp(250px, calc(100% - 32px), 1000px);
     height: 100%;
     margin: 16px;
     margin-bottom: 0px;
 }
+
 
 @media screen and (max-width: 500px) {
     mat-error{

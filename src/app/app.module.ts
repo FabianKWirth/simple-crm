@@ -22,7 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
@@ -31,7 +31,7 @@ import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-ad
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { DealsComponent } from './deals/deals.component';
 import { DialogAddDealComponent } from './dialog-add-deal/dialog-add-deal.component';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { DialogEditDealComponent } from './dialog-edit-deal/dialog-edit-deal.component';
 import { NewsFeedComponent } from './news-feed/news-feed.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,7 +42,7 @@ import { TotalDealsVolumeComponent } from './total-deals-volume/total-deals-volu
 import { TotalClosedWonDealsVolumeComponent } from './total-closed-won-deals-volume/total-closed-won-deals-volume.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { DealStatusChartComponent } from './deal-status-chart/deal-status-chart.component';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SystemMessageComponent } from './system-message/system-message.component';
@@ -104,5 +104,5 @@ import { AuthComponent } from './auth/auth.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  
+
 }

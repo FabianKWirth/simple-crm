@@ -39,11 +39,9 @@ export class FirebaseService {
     if (deal.id == "") {
       const docInstance = doc(collection(this.firestore, "deals"));
       setDoc(docInstance, deal.toJSON());
-      console.log("deal created");
     } else {
       const docInstance = doc(this.firestore, 'deals', deal.id);
       updateDoc(docInstance, deal.toJSON());
-      console.log("deal updated");
     }
   }
 

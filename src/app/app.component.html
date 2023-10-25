@@ -13,23 +13,21 @@
         <li (click)="goto('/user')"><mat-icon>fact_check</mat-icon>Users</li>
         <li (click)="goto('/legalnotice')"><mat-icon>info</mat-icon>Legal Notice</li>
       </ul>
-
-
     </mat-drawer>
 
     <div class="header-content">
       <mat-toolbar>
-
         <button mat-icon-button class="burger-icon" (click)="drawer.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
         <span>Simple CRM</span>
         <button mat-button (click)="firebaseAuth.logout()">Logout</button>
       </mat-toolbar>
-      <div class="router-container">
-        <router-outlet></router-outlet>
-      </div>
     </div>
+    <div class="router-container">
+      <router-outlet></router-outlet>
+    </div>
+
 
   </mat-drawer-container>
 </div>

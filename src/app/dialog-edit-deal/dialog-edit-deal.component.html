@@ -1,7 +1,7 @@
 <form [formGroup]="dealForm">
     <div class="default-form">
       <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-      <h1 mat-dialog-title>Add-Deal</h1>
+      <h1 mat-dialog-title>Edit-Deal</h1>
       <mat-form-field>
         <mat-label>Select Status</mat-label>
         <mat-select formControlName="status" [(ngModel)]="deal.status">
@@ -28,7 +28,7 @@
   
       <div mat-dialog-actions>
         <button mat-button (click)="closeDialog()">No Thanks</button>
-        <button mat-button [disabled]="dealForm.invalid" (click)="saveDeal()" cdkFocusInitial>Save</button>
+        <button mat-button [disabled]="dealForm.invalid" (click)="saveDeal()">Save</button>
       </div>
     </div>
   </form>

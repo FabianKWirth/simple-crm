@@ -16,19 +16,19 @@
       <textarea matInput [(ngModel)]="deal.description" formControlName="description"></textarea>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Value</mat-label>
-      <input [disabled]="loading" matInput type="number" formControlName="volume" step="0.01" [(ngModel)]="deal.volume"/>
+      <mat-label>Volume</mat-label>
+      <input [disabled]="loading" matInput type="number" formControlName="volume" [(ngModel)]="deal.volume"/>
       <mat-error *ngIf="dealForm.get('volume').hasError('required') && dealForm.get('volume').touched">
-        Value is required.
+        Volume is required.
       </mat-error>
       <mat-error *ngIf="dealForm.get('volume').hasError('min') && dealForm.get('volume').touched">
-        Value must be greater than or equal to 0.01.
+        Volume must be greater than or equal to 0.01.
       </mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions>
       <button mat-button (click)="closeDialog()">No Thanks</button>
-      <button mat-button [disabled]="dealForm.invalid" (click)="saveDeal()" cdkFocusInitial>Ok</button>
+      <button mat-button [disabled]="dealForm.invalid" (click)="saveDeal()">Add</button>
     </div>
   </div>
 </form>
